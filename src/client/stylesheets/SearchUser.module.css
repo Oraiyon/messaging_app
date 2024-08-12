@@ -47,3 +47,12 @@
   border: 2px solid var(--secondary-color);
   padding: 0.25em;
 }
+
+.request_buttons {
+  display: flex;
+  gap: 0.25em;
+}
+
+.request_buttons > button {
+  width: 100%;
+}

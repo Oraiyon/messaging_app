@@ -96,7 +96,7 @@ const SearchUser = (props) => {
       }
     }
     if (sent) {
-      if (props.user._id === friendReq.sender.id) {
+      if (props.user._id === friendReq.sender._id) {
         return (
           <button
             onClick={removeFriendRequest}
@@ -111,7 +111,7 @@ const SearchUser = (props) => {
         );
       } else {
         return (
-          <div>
+          <div className={styles.request_buttons}>
             <button
               onClick={acceptFriendRequest}
               className={
