@@ -7,7 +7,7 @@ const FriendRequests = (props) => {
       // Check
       // Use body instead of url?
       const fetchUser = await fetch(
-        `/api/friendrequest/remove/${props.user._id}/${request.receiver.id === props.user._id ? request.sender.id : request.receiver.id}`,
+        `/api/friendrequest/remove/${props.user._id}/${request.receiver._id === props.user._id ? request.sender._id : request.receiver._id}`,
         { method: "PUT" }
       );
       const data = await fetchUser.json();
@@ -21,7 +21,7 @@ const FriendRequests = (props) => {
     try {
       // Check
       const fetchUser = await fetch(
-        `/api/friendrequest/accept/${props.user._id}/${request.receiver.id === props.user._id ? request.sender.id : request.receiver.id}`,
+        `/api/friendrequest/accept/${props.user._id}/${request.receiver._id === props.user._id ? request.sender._id : request.receiver._id}`,
         { method: "PUT" }
       );
       const data = await fetchUser.json();
