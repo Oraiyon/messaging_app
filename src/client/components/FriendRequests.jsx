@@ -4,6 +4,7 @@ import DisplayProfilePicture from "./DisplayProfilePicture";
 const FriendRequests = (props) => {
   const removeFriendRequest = async (request) => {
     try {
+      // Check
       // Use body instead of url?
       const fetchUser = await fetch(
         `/api/friendrequest/remove/${props.user._id}/${request.receiver.id === props.user._id ? request.sender.id : request.receiver.id}`,
@@ -18,6 +19,7 @@ const FriendRequests = (props) => {
 
   const acceptFriendRequest = async (request) => {
     try {
+      // Check
       const fetchUser = await fetch(
         `/api/friendrequest/accept/${props.user._id}/${request.receiver.id === props.user._id ? request.sender.id : request.receiver.id}`,
         { method: "PUT" }
@@ -30,7 +32,14 @@ const FriendRequests = (props) => {
     }
   };
 
-  // FIX
+  const PictureHandler = (props) => {
+    if (props.request.sender._id !== props.user._id) {
+      return <DisplayProfilePicture profile={props.request.sender} />;
+    } else {
+      return <DisplayProfilePicture profile={props.request.receiver} />;
+    }
+  };
+
   const ButtonHandler = (props) => {
     if (props.request.sender._id !== props.user._id) {
       return (
@@ -43,9 +52,6 @@ const FriendRequests = (props) => {
       return <button onClick={() => removeFriendRequest(props.request)}>Unsend</button>;
     }
   };
-
-  // FIX
-  const PictureHandler = (props) => {};
 
   // Separate friend requests for sent or received?
   return (
@@ -60,7 +66,7 @@ const FriendRequests = (props) => {
           {props.user.friendRequests.map((request) => (
             <div key={request._id} className={styles.friend_request}>
               <div>
-                {/* <PictureHandler request={request} /> */}
+                <PictureHandler user={props.user} request={request} />
                 <p>
                   {request.sender.username === props.user.username
                     ? request.receiver.username
