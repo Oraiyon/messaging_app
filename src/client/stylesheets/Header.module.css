@@ -1,0 +1,50 @@
+.link {
+  width: 100%;
+}
+
+.header_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-color);
+  border-bottom: 1px solid white;
+  padding: 0.25em;
+}
+
+.header_buttons {
+  display: flex;
+}
+
+.account_links {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.account_links > div {
+  display: flex;
+  gap: 0.25em;
+  align-items: center;
+}
+
+.account_links > svg:hover {
+  background-color: var(--highlight-color);
+  cursor: pointer;
+}
+
+.friends_list_button {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .friends_list_button {
+    display: flex;
+  }
+}
+
+@media (max-width: 375px) {
+  .friends_list_button {
+    display: flex;
+  }
+}

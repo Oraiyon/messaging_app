@@ -1,0 +1,70 @@
+.messages_container {
+  display: flex;
+  height: 100%;
+}
+
+.chat {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chat > form > input[type="text"] {
+  border: 1px solid var(--primary-color);
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  height: 100%;
+  gap: 0.25em;
+}
+
+.messages p:last-child {
+  font-size: small;
+}
+
+.user_message {
+  text-align: end;
+  align-self: flex-end;
+  width: 50%;
+  background-color: var(--secondary-color);
+  border: 1px solid white;
+  border-right: 0;
+  border-radius: 0.25em 0 0 0.25em;
+  color: black;
+  width: max-content;
+  padding: 0 0.25em;
+}
+
+.friend_message {
+  width: 50%;
+  background-color: var(--secondary-color);
+  border: 1px solid white;
+  border-left: 0;
+  border-radius: 0 0.25em 0.25em 0;
+  color: black;
+  width: max-content;
+  padding: 0 0.25em;
+}
+
+.send_message_button {
+  border-radius: 0;
+  height: 100%;
+}
+
+.chat_hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .chat > form > input[type="text"] {
+    border-left: 0;
+  }
+}

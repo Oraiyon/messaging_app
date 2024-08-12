@@ -1,0 +1,49 @@
+.search_form {
+  display: none;
+}
+
+.searched_user {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 0.25em;
+  padding-top: 0.25em;
+  justify-content: space-between;
+}
+
+.inactive_friend_button {
+  display: none;
+}
+
+.active_friend_button {
+  display: flex;
+  justify-content: center;
+}
+
+.search_form_displayed {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1;
+  height: 100%;
+  color: white;
+  padding: 0.25em;
+}
+
+.foundUser_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25em;
+}
+
+.foundUser_info > div {
+  width: 100px;
+  height: 100px;
+}
+
+.foundUser_bio {
+  border: 2px solid var(--secondary-color);
+  padding: 0.25em;
+}

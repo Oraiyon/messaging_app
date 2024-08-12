@@ -1,0 +1,71 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: rgb(48, 47, 47);
+  --secondary-color: rgb(206, 206, 206);
+  --highlight-color: rgb(100, 100, 100);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--primary-color);
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+button {
+  background-color: white;
+  padding: 0.25em;
+  border: none;
+}
+
+button:hover {
+  background-color: var(--highlight-color);
+  color: white;
+  cursor: pointer;
+}
+
+button:hover > a {
+  color: white;
+}
+
+button > a {
+  color: black;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.25em;
+  border: none;
+}
+
+/* Found in DisplayProfilePicture.jsx */
+/* styles.CLASSNAME did not work */
+.user_picture_container {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 125px;
+  height: 125px;
+}
+
+form {
+  display: flex;
+}
+
+textarea {
+  border: none;
+}

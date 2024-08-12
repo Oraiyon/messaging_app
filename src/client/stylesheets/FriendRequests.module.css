@@ -1,0 +1,38 @@
+.friend_requests {
+  display: none;
+}
+
+.friend_requests_displayed {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  color: white;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  padding: 0.25em;
+}
+
+.friend_request {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.friend_request > :first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.friend_request_inputs {
+  display: flex;
+  gap: 0.25em;
+}
+
+.friend_requests_info {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
