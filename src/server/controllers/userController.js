@@ -119,23 +119,7 @@ export const get_search_profile = expressAsyncHandler(async (req, res, next) => 
 export const post_send_friend_request = [
   expressAsyncHandler(async (req, res, next) => {
     const [sender, receiver] = await Promise.all([
-      User.findById(req.params.sender)
-        .populate("friends")
-        .populate({
-          path: "friendRequests",
-          populate: {
-            path: "sender",
-            model: "users"
-          }
-        })
-        .populate({
-          path: "friendRequests",
-          populate: {
-            path: "receiver",
-            model: "users"
-          }
-        })
-        .exec(),
+      User.findById(req.params.sender).exec(),
       User.findById(req.params.receiver).exec()
     ]);
     // for (const request of sender.friendRequests) {
@@ -195,19 +179,30 @@ export const put_remove_friend_request = expressAsyncHandler(async (req, res, ne
         }
       })
       .exec(),
-    User.findById(req.params.receiver).exec()
+    User.findById(req.params.receiver)
+      .populate({
+        path: "friendRequests",
+        populate: {
+          path: "sender",
+          model: "users"
+        }
+      })
+      .populate({
+        path: "friendRequests",
+        populate: {
+          path: "receiver",
+          model: "users"
+        }
+      })
+      .exec()
   ]);
-  // const newFriendRequestsSender = sender.friendRequests.filter((request) =>
-  //   sender.username === request.username
-  //     ? request.receiver.username !== receiver.username
-  //     : request.sender.username !== receiver.username
-  // );
-  // const newFriendRequestsReceiver = receiver.friendRequests.filter((request) =>
-  //   receiver.username === request.receiver.username
-  //     ? request.sender.username !== sender.username
-  //     : request.receiver.username !== sender.username
-  // );
+  const newFriendRequestsSender = sender.friendRequests.filter(
+    (request) => request._id.toString() !== req.body.friendRequestId
+  );
   sender.friendRequests = newFriendRequestsSender;
+  const newFriendRequestsReceiver = receiver.friendRequests.filter(
+    (request) => request._id.toString() !== req.body.friendRequestId
+  );
   receiver.friendRequests = newFriendRequestsReceiver;
   await sender.save();
   await receiver.save();
@@ -279,23 +274,7 @@ export const put_remove_friend = expressAsyncHandler(async (req, res, next) => {
         }
       })
       .exec(),
-    User.findById(req.params.friend)
-      .populate("friends")
-      .populate({
-        path: "friendRequests",
-        populate: {
-          path: "sender",
-          model: "users"
-        }
-      })
-      .populate({
-        path: "friendRequests",
-        populate: {
-          path: "receiver",
-          model: "users"
-        }
-      })
-      .exec()
+    User.findById(req.params.friend).populate("friends").exec()
   ]);
   const newUserFriends = user.friends.filter((friend) => friend.username !== friendUser.username);
   const newFriendUserFriends = friendUser.friends.filter(
