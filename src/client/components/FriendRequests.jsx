@@ -15,9 +15,13 @@ const FriendRequests = (props) => {
     }
   };
 
+  // CHECK
   const acceptFriendRequest = async (request) => {
     try {
-      // Check
+      await fetch(
+        `/api/friendrequest/remove/${props.user._id}/${request.receiver._id === props.user._id ? request.sender._id : request.receiver._id}`,
+        { method: "PUT" }
+      );
       const fetchUser = await fetch(
         `/api/friendrequest/accept/${props.user._id}/${request.receiver._id === props.user._id ? request.sender._id : request.receiver._id}`,
         { method: "PUT" }

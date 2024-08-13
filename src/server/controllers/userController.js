@@ -240,18 +240,6 @@ export const put_accept_friend_request = [
       User.findById(req.params.sender).exec(),
       User.findById(req.params.receiver).exec()
     ]);
-    // const newFriendRequestsSender = sender.friendRequests.filter((request) =>
-    //   sender.username === request.sender.username
-    //     ? request.receiver.username !== receiver.username
-    //     : request.sender.username !== receiver.username
-    // );
-    // const newFriendRequestsReceiver = receiver.friendRequests.filter((request) =>
-    //   receiver.username === request.receiver.username
-    //     ? request.sender.username !== sender.username
-    //     : request.receiver.username !== sender.username
-    // );
-    sender.friendRequests = newFriendRequestsSender;
-    receiver.friendRequests = newFriendRequestsReceiver;
     sender.friends = [receiver._id, ...sender.friends];
     receiver.friends = [sender._id, ...receiver.friends];
     await sender.save();
