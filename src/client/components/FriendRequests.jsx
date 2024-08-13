@@ -4,16 +4,9 @@ import DisplayProfilePicture from "./DisplayProfilePicture";
 const FriendRequests = (props) => {
   const removeFriendRequest = async (request) => {
     try {
-      // Use body instead of url?
       const fetchUser = await fetch(
         `/api/friendrequest/remove/${props.user._id}/${request.receiver._id === props.user._id ? request.sender._id : request.receiver._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ friendRequestId: request._id })
-        }
+        { method: "PUT" }
       );
       const data = await fetchUser.json();
       props.setUser(data);

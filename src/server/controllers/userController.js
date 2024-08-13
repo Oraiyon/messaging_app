@@ -196,13 +196,38 @@ export const put_remove_friend_request = expressAsyncHandler(async (req, res, ne
       })
       .exec()
   ]);
+  let senderFriendRequestId;
+  let receiverFriendRequestId;
+  // For loops for pushing requests directly into arrays?
+  for (const request of sender.friendRequests) {
+    if (
+      (request.sender.username === sender.username &&
+        request.receiver.username === receiver.username) ||
+      (request.receiver.username === sender.username &&
+        request.sender.username === receiver.username)
+    ) {
+      senderFriendRequestId = request._id.toString();
+      break;
+    }
+  }
+  for (const request of receiver.friendRequests) {
+    if (
+      (request.sender.username === sender.username &&
+        request.receiver.username === receiver.username) ||
+      (request.receiver.username === sender.username &&
+        request.sender.username === receiver.username)
+    ) {
+      receiverFriendRequestId = request._id.toString();
+      break;
+    }
+  }
   const newFriendRequestsSender = sender.friendRequests.filter(
-    (request) => request._id.toString() !== req.body.friendRequestId
+    (request) => request._id.toString() !== senderFriendRequestId
+  );
+  const newFriendRequestsReceiver = receiver.friendRequests.filter(
+    (request) => request._id.toString() !== receiverFriendRequestId
   );
   sender.friendRequests = newFriendRequestsSender;
-  const newFriendRequestsReceiver = receiver.friendRequests.filter(
-    (request) => request._id.toString() !== req.body.friendRequestId
-  );
   receiver.friendRequests = newFriendRequestsReceiver;
   await sender.save();
   await receiver.save();
