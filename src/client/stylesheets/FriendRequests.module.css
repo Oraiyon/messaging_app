@@ -16,6 +16,10 @@
   padding: 0.25em 0 0 0.25em;
 }
 
+.friend_requests_displayed > p {
+  padding-left: 0.25em;
+}
+
 .friend_request {
   display: flex;
   justify-content: space-between;
