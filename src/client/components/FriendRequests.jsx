@@ -69,12 +69,8 @@ const FriendRequests = (props) => {
       {props.user.friendRequests.length ? (
         <div className={styles.friend_requests_info}>
           {props.user.friendRequests.map((request) => (
-            <div
-              key={request._id}
-              className={styles.friend_request}
-              onClick={() => goToUserProfile(request)}
-            >
-              <div>
+            <div key={request._id} className={styles.friend_request}>
+              <div onClick={() => goToUserProfile(request)}>
                 <PictureHandler user={props.user} request={request} />
                 <p>
                   {request.sender.username === props.user.username
