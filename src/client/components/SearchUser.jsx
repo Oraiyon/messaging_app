@@ -2,6 +2,7 @@ import styles from "../stylesheets/SearchUser.module.css";
 import DisplayProfilePicture from "./DisplayProfilePicture";
 
 const SearchUser = (props) => {
+  // State for searching users?
   const searchUserProfiles = async (e) => {
     try {
       if (!e.target.value || e.target.value === props.user.username) {
@@ -165,6 +166,7 @@ const SearchUser = (props) => {
         id="searchUser"
         placeholder="Enter username"
         onChange={searchUserProfiles}
+        ref={props.searchUserValue}
       />
       <div className={styles.searched_user}>
         <div>

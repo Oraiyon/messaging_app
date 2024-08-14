@@ -50,6 +50,14 @@ const FriendRequests = (props) => {
     }
   };
 
+  const goToUserProfile = (request) => {
+    props.searchUserButton.current.click();
+    const friendRequestUser =
+      request.sender.username === props.user.username ? request.receiver : request.sender;
+    props.searchUserValue.current.value = friendRequestUser.username;
+    props.setFoundUser(friendRequestUser);
+  };
+
   // Separate friend requests for sent or received?
   return (
     <div
@@ -61,7 +69,11 @@ const FriendRequests = (props) => {
       {props.user.friendRequests.length ? (
         <div className={styles.friend_requests_info}>
           {props.user.friendRequests.map((request) => (
-            <div key={request._id} className={styles.friend_request}>
+            <div
+              key={request._id}
+              className={styles.friend_request}
+              onClick={() => goToUserProfile(request)}
+            >
               <div>
                 <PictureHandler user={props.user} request={request} />
                 <p>

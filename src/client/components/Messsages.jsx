@@ -4,7 +4,7 @@ import SearchUser from "./SearchUser";
 import FriendRequests from "./FriendRequests";
 import FriendsList from "./FriendsList";
 import Header from "./Header";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Messages = () => {
   const [
@@ -27,6 +27,9 @@ const Messages = () => {
   const [chatHidden, setChatHidden] = useState(false);
   const [displaySearch, setDisplaySearch] = useState(false);
   const [displayFriendRequests, setDisplayFriendRequests] = useState(false);
+
+  const searchUserButton = useRef(null);
+  const searchUserValue = useRef(null);
 
   const handleMessagesPageResize = () => {
     if (window.innerWidth > 768) {
@@ -119,6 +122,7 @@ const Messages = () => {
         setDisplaySearch={setDisplaySearch}
         displayFriendRequests={displayFriendRequests}
         setDisplayFriendRequests={setDisplayFriendRequests}
+        searchUserButton={searchUserButton}
       />
       <div className={styles.messages_container}>
         <FriendsList
@@ -159,12 +163,16 @@ const Messages = () => {
           foundUser={foundUser}
           setFoundUser={setFoundUser}
           displaySearch={displaySearch}
+          searchUserValue={searchUserValue}
         />
         <FriendRequests
           user={user}
           setUser={setUser}
           setCurrentChat={setCurrentChat}
+          setFoundUser={setFoundUser}
           displayFriendRequests={displayFriendRequests}
+          searchUserButton={searchUserButton}
+          searchUserValue={searchUserValue}
         />
       </div>
     </>

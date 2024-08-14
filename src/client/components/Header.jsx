@@ -54,7 +54,9 @@ const Header = (props) => {
               <button onClick={displayFriendsList} className={styles.friends_list_button}>
                 Friends
               </button>
-              <button onClick={displaySearch}>Search</button>
+              <button onClick={displaySearch} ref={props.searchUserButton}>
+                Search
+              </button>
               <button onClick={displayFriendRequests}>Friend Requests</button>
             </>
           ) : (
