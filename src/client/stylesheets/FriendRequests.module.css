@@ -33,9 +33,21 @@
   align-items: center;
 }
 
+.friend_request:hover {
+  background-color: var(--highlight-color);
+}
+
 .friend_request_inputs {
   display: flex;
   gap: 0.25em;
+}
+
+.friend_request_inputs > button:first-of-type:hover {
+  background-color: green;
+}
+
+.friend_request_inputs > button:last-of-type:hover {
+  background-color: red;
 }
 
 .friend_requests_info {
