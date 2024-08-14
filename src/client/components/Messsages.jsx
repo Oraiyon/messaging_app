@@ -71,7 +71,7 @@ const Messages = () => {
   const sendMessage = async (e) => {
     try {
       e.preventDefault();
-      if (!text.current.value.length) {
+      if (!text.current.value) {
         return;
       }
       const messageFetch = await fetch(`/api/message/${user._id}/${currentChat._id}`, {
@@ -107,6 +107,26 @@ const Messages = () => {
     }
   };
 
+  const DisplayMessageInput = (props) => {
+    if (props.currentChat) {
+      return (
+        <form action="" method="post">
+          <label htmlFor="message"></label>
+          <input
+            type="text"
+            name="message"
+            className={styles.text}
+            id="message"
+            placeholder="Send a message"
+          />
+          <button onClick={sendMessage} className={styles.send_message_button}>
+            Send
+          </button>
+        </form>
+      );
+    }
+  };
+
   return (
     <>
       <Header
@@ -138,23 +158,7 @@ const Messages = () => {
         />
         <div className={chatHidden ? styles.chat_hidden : styles.chat}>
           <DisplayMessages />
-          {currentChat ? (
-            <form action="" method="post">
-              <label htmlFor="message"></label>
-              <input
-                type="text"
-                name="message"
-                className={styles.text}
-                id="message"
-                placeholder="Send a message"
-              />
-              <button onClick={sendMessage} className={styles.send_message_button}>
-                Send
-              </button>
-            </form>
-          ) : (
-            ""
-          )}
+          <DisplayMessageInput currentChat={currentChat} />
         </div>
         <SearchUser
           user={user}
