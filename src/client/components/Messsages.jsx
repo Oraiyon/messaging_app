@@ -155,6 +155,7 @@ const Messages = () => {
         <SearchUser
           user={user}
           setUser={setUser}
+          setCurrentChat={setCurrentChat}
           foundUser={foundUser}
           setFoundUser={setFoundUser}
           displaySearch={displaySearch}

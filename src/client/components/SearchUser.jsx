@@ -53,15 +53,13 @@ const SearchUser = (props) => {
   const acceptFriendRequest = async (e) => {
     try {
       e.preventDefault();
-      await fetch(`/api/friendrequest/remove/${props.user._id}/${props.foundUser._id}`, {
-        method: "PUT"
-      });
       const fetchUser = await fetch(
         `/api/friendrequest/accept/${props.user._id}/${props.foundUser._id}`,
         { method: "PUT" }
       );
       const data = await fetchUser.json();
       props.setUser(data);
+      props.setCurrentChat(data.friends[0]);
     } catch (error) {
       console.log(error);
     }
