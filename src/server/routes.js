@@ -13,7 +13,10 @@ import post_signup, {
   put_change_picture,
   put_user_bio
 } from "./controllers/userController.js";
-import post_send_message, { get_messages } from "./controllers/messageController.js";
+import post_send_message, {
+  get_messages,
+  put_delete_messages
+} from "./controllers/messageController.js";
 
 const router = express.Router();
 
@@ -62,5 +65,8 @@ router.put("/api/:id/profile/account/picture", put_change_picture);
 
 // Change user.bio
 router.put("/api/:id/profile/account/bio", put_user_bio);
+
+// Deletes message
+router.put("/api/message/delete/:sender/:receiver/:id", put_delete_messages);
 
 export default router;

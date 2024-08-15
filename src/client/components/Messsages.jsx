@@ -27,6 +27,7 @@ const Messages = () => {
   const [chatHidden, setChatHidden] = useState(false);
   const [displaySearch, setDisplaySearch] = useState(false);
   const [displayFriendRequests, setDisplayFriendRequests] = useState(false);
+  const [deleteMessageId, setDeleteMessageId] = useState(null);
 
   const textRef = useRef(null);
   const searchUserButton = useRef(null);
@@ -90,6 +91,38 @@ const Messages = () => {
     }
   };
 
+  // Delete messages still turn red?
+  const setDeleteMessageIdButton = (id) => {
+    if (id === deleteMessageId) {
+      setDeleteMessageId(null);
+    } else {
+      setDeleteMessageId(id);
+    }
+  };
+
+  const deleteMessage = async (id) => {
+    try {
+      const messagesFetch = await fetch(
+        `/api/message/delete/${user._id}/${currentChat._id}/${id}`,
+        { method: "PUT" }
+      );
+      const data = await messagesFetch.json();
+      setCurrentMessages(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const DisplayDeleteMessageButton = (props) => {
+    if (
+      props.message.sender === user._id &&
+      props.message.id === deleteMessageId &&
+      props.message.message !== "--Deleted Message--"
+    ) {
+      return <button onClick={() => deleteMessage(props.message.id)}>Delete</button>;
+    }
+  };
+
   const DisplayMessages = () => {
     if (currentChat && currentMessages && !currentMessages.length) {
       return (
@@ -104,9 +137,15 @@ const Messages = () => {
             <div
               key={message._id}
               className={message.sender === user._id ? styles.user_message : styles.friend_message}
+              onMouseEnter={() => setDeleteMessageId(message._id)}
+              onMouseLeave={() => setDeleteMessageId(null)}
+              onClick={() => setDeleteMessageIdButton(message._id)}
             >
-              <p>{message.message}</p>
-              <p>{message.date_sent_formatted}</p>
+              <div className={styles.message_info}>
+                <p>{message.message}</p>
+                <p>{message.date_sent_formatted}</p>
+              </div>
+              <DisplayDeleteMessageButton message={message} />
             </div>
           ))}
         </div>

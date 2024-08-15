@@ -66,4 +66,14 @@ export const get_messages = expressAsyncHandler(async (req, res, next) => {
   res.json(messages);
 });
 
+export const put_delete_messages = [
+  expressAsyncHandler(async (req, res, next) => {
+    const message = await Message.findById(req.params.id).exec();
+    message.message = "--Deleted Message--";
+    await message.save();
+    next();
+  }),
+  get_messages
+];
+
 export default post_send_message;
