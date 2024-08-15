@@ -1,5 +1,3 @@
-import styles from "../stylesheets/SearchFriend.module.css";
-
 const SearchFriend = (props) => {
   const findFriend = async (e) => {
     try {
