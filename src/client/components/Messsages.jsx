@@ -28,6 +28,7 @@ const Messages = () => {
   const [displaySearch, setDisplaySearch] = useState(false);
   const [displayFriendRequests, setDisplayFriendRequests] = useState(false);
 
+  const textRef = useRef(null);
   const searchUserButton = useRef(null);
   const searchUserValue = useRef(null);
 
@@ -71,15 +72,15 @@ const Messages = () => {
   const sendMessage = async (e) => {
     try {
       e.preventDefault();
-      if (!text.current.value) {
+      if (!textRef.current.value) {
         return;
       }
       const messageFetch = await fetch(`/api/message/${user._id}/${currentChat._id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text.current.value })
+        body: JSON.stringify({ message: textRef.current.value })
       });
-      text.current.value = "";
+      textRef.current.value = "";
       // Returns sender & receiver
       const data = await messageFetch.json();
       setUser(data.sender);
@@ -124,6 +125,7 @@ const Messages = () => {
             className={styles.text}
             id="message"
             placeholder="Send a message"
+            ref={textRef}
           />
           <button onClick={sendMessage} className={styles.send_message_button}>
             Send
