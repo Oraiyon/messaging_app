@@ -53,13 +53,12 @@ input[type="password"] {
 /* Found in DisplayProfilePicture.jsx */
 /* styles.CLASSNAME did not work */
 .user_picture_container {
-  grid-column: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  width: 125px;
-  height: 125px;
+  width: 150px;
+  height: 150px;
 }
 
 form {

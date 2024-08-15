@@ -39,13 +39,15 @@
 }
 
 .foundUser_info > div {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
 }
 
 .foundUser_bio {
   border: 2px solid var(--secondary-color);
   padding: 0.25em;
+  overflow-y: scroll;
+  scrollbar-width: thin;
 }
 
 .request_buttons {

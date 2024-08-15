@@ -8,6 +8,11 @@
   gap: 0.25em;
 }
 
+.account_container > div:first-child > img {
+  width: 150px;
+  height: 150px;
+}
+
 .edits {
   display: flex;
   flex-direction: column;
