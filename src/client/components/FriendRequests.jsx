@@ -58,7 +58,6 @@ const FriendRequests = (props) => {
     props.setFoundUser(friendRequestUser);
   };
 
-  // Separate friend requests for sent or received?
   return (
     <div
       className={
@@ -85,7 +84,7 @@ const FriendRequests = (props) => {
           ))}
         </div>
       ) : (
-        <p>None</p>
+        <p>No Requests</p>
       )}
     </div>
   );

@@ -33,7 +33,7 @@ const FriendsList = (props) => {
     }
   };
 
-  const DisplayFriends = (props) => {
+  const DisplayFriends = () => {
     if (props.user.friends.length) {
       return (
         <>
@@ -71,7 +71,7 @@ const FriendsList = (props) => {
 
   return (
     <div className={props.friendsListHidden ? styles.friends_hidden : styles.friends_container}>
-      <DisplayFriends user={props.user} currentChat={props.currentChat} />
+      <DisplayFriends />
     </div>
   );
 };
