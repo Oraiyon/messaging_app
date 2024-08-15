@@ -90,7 +90,13 @@ const Messages = () => {
   };
 
   const DisplayMessages = () => {
-    if (currentChat && currentMessages) {
+    if (currentChat && currentMessages && !currentMessages.length) {
+      return (
+        <div className={styles.messages}>
+          <p>No Messages</p>
+        </div>
+      );
+    } else if (currentChat && currentMessages) {
       return (
         <div className={styles.messages}>
           {currentMessages.map((message) => (
@@ -107,8 +113,8 @@ const Messages = () => {
     }
   };
 
-  const DisplayMessageInput = (props) => {
-    if (props.currentChat) {
+  const DisplayMessageInput = () => {
+    if (currentChat) {
       return (
         <form action="" method="post">
           <label htmlFor="message"></label>
@@ -158,7 +164,7 @@ const Messages = () => {
         />
         <div className={chatHidden ? styles.chat_hidden : styles.chat}>
           <DisplayMessages />
-          <DisplayMessageInput currentChat={currentChat} />
+          <DisplayMessageInput />
         </div>
         <SearchUser
           user={user}

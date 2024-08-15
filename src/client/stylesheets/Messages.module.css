@@ -26,7 +26,12 @@
   gap: 0.25em;
 }
 
-.messages p:last-child {
+.messages > p {
+  color: white;
+  padding: 0.25em;
+}
+
+.messages > div > p:last-child {
   font-size: small;
 }
 
