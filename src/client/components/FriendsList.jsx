@@ -33,11 +33,12 @@ const FriendsList = (props) => {
     }
   };
 
-  return (
-    <div className={props.friendsListHidden ? styles.friends_hidden : styles.friends_container}>
-      <div className={styles.friends_list}>
-        {props.user.friends.length
-          ? props.user.friends.map((friend) => (
+  const DisplayFriends = (props) => {
+    if (props.user.friends.length) {
+      return (
+        <>
+          <div className={styles.friends_list}>
+            {props.user.friends.map((friend) => (
               <div
                 key={friend._id}
                 className={
@@ -54,10 +55,23 @@ const FriendsList = (props) => {
                   <Icon path={mdiCloseCircle} onClick={() => removeFriend(friend)} />
                 </button>
               </div>
-            ))
-          : ""}
-      </div>
-      <SearchFriend user={props.user} setCurrentChat={props.setCurrentChat} />
+            ))}
+          </div>
+          <SearchFriend user={props.user} setCurrentChat={props.setCurrentChat} />
+        </>
+      );
+    } else {
+      return (
+        <div className={styles.friends_list}>
+          <p>No Friends</p>
+        </div>
+      );
+    }
+  };
+
+  return (
+    <div className={props.friendsListHidden ? styles.friends_hidden : styles.friends_container}>
+      <DisplayFriends user={props.user} currentChat={props.currentChat} />
     </div>
   );
 };
