@@ -160,7 +160,7 @@ export const post_send_friend_request = [
   })
 ];
 
-export const put_remove_friend_request = expressAsyncHandler(async (req, res, next) => {
+const filterFriendRequest = expressAsyncHandler(async (req, res, next) => {
   const [sender, receiver] = await Promise.all([
     User.findById(req.params.sender)
       .populate("friends")
@@ -230,77 +230,39 @@ export const put_remove_friend_request = expressAsyncHandler(async (req, res, ne
   receiver.friendRequests = newFriendRequestsReceiver;
   await sender.save();
   await receiver.save();
-  res.json(sender);
+  next();
 });
 
+export const put_remove_friend_request = [
+  filterFriendRequest,
+  expressAsyncHandler(async (req, res, next) => {
+    const sender = await User.findById(req.params.sender)
+      .populate({
+        path: "friendRequests",
+        populate: {
+          path: "sender",
+          model: "users"
+        }
+      })
+      .populate({
+        path: "friendRequests",
+        populate: {
+          path: "receiver",
+          model: "users"
+        }
+      })
+      .exec();
+    res.json(sender);
+  })
+];
+
 export const put_accept_friend_request = [
+  filterFriendRequest,
   expressAsyncHandler(async (req, res, next) => {
     const [sender, receiver] = await Promise.all([
-      User.findById(req.params.sender)
-        .populate({
-          path: "friendRequests",
-          populate: {
-            path: "sender",
-            model: "users"
-          }
-        })
-        .populate({
-          path: "friendRequests",
-          populate: {
-            path: "receiver",
-            model: "users"
-          }
-        })
-        .exec(),
-      User.findById(req.params.receiver)
-        .populate({
-          path: "friendRequests",
-          populate: {
-            path: "sender",
-            model: "users"
-          }
-        })
-        .populate({
-          path: "friendRequests",
-          populate: {
-            path: "receiver",
-            model: "users"
-          }
-        })
-        .exec()
+      User.findById(req.params.sender).exec(),
+      User.findById(req.params.receiver).exec()
     ]);
-    let senderFriendRequestId;
-    let receiverFriendRequestId;
-    for (const request of sender.friendRequests) {
-      if (
-        (request.sender.username === sender.username &&
-          request.receiver.username === receiver.username) ||
-        (request.receiver.username === sender.username &&
-          request.sender.username === receiver.username)
-      ) {
-        senderFriendRequestId = request._id.toString();
-        break;
-      }
-    }
-    for (const request of receiver.friendRequests) {
-      if (
-        (request.sender.username === sender.username &&
-          request.receiver.username === receiver.username) ||
-        (request.receiver.username === sender.username &&
-          request.sender.username === receiver.username)
-      ) {
-        receiverFriendRequestId = request._id.toString();
-        break;
-      }
-    }
-    const newFriendRequestsSender = sender.friendRequests.filter(
-      (request) => request._id.toString() !== senderFriendRequestId
-    );
-    const newFriendRequestsReceiver = receiver.friendRequests.filter(
-      (request) => request._id.toString() !== receiverFriendRequestId
-    );
-    sender.friendRequests = newFriendRequestsSender;
-    receiver.friendRequests = newFriendRequestsReceiver;
     sender.friends = [receiver._id, ...sender.friends];
     receiver.friends = [sender._id, ...receiver.friends];
     await sender.save();
