@@ -143,14 +143,6 @@ export const post_send_friend_request = [
       User.findById(req.params.sender).exec(),
       User.findById(req.params.receiver).exec()
     ]);
-    // for (const request of sender.friendRequests) {
-    //   if (
-    //     request.receiver.username === sender.username ||
-    //     request.receiver.username === receiver.username
-    //   ) {
-    //     return;
-    //   }
-    // }
     const friendRequest = { sender: sender._id, receiver: receiver._id };
     sender.friendRequests = [...sender.friendRequests, friendRequest];
     receiver.friendRequests = [...receiver.friendRequests, friendRequest];
