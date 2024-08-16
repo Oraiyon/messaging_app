@@ -5,6 +5,8 @@ import FriendRequests from "./FriendRequests";
 import FriendsList from "./FriendsList";
 import Header from "./Header";
 import { useEffect, useRef, useState } from "react";
+import Icon from "@mdi/react";
+import { mdiCloseCircle } from "@mdi/js";
 
 const Messages = () => {
   const [
@@ -91,7 +93,6 @@ const Messages = () => {
     }
   };
 
-  // Delete messages still turn red?
   const setDeleteMessageIdButton = (id) => {
     if (id === deleteMessageId) {
       setDeleteMessageId(null);
@@ -119,7 +120,11 @@ const Messages = () => {
       props.message.id === deleteMessageId &&
       props.message.message !== "--Deleted Message--"
     ) {
-      return <button onClick={() => deleteMessage(props.message.id)}>Delete</button>;
+      return (
+        <button className={styles.delete_message_button}>
+          <Icon path={mdiCloseCircle} onClick={() => deleteMessage(props.message._id)} />
+        </button>
+      );
     }
   };
 
