@@ -76,11 +76,11 @@
   display: flex;
   align-items: center;
   background-color: var(--secondary-color);
+  padding: 0;
 }
 
 .delete_message_button:hover > svg {
   color: red;
-  padding: 0;
   background-color: var(--secondary-color);
 }
 
