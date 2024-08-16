@@ -59,14 +59,17 @@
   width: 25px;
 }
 
-.remove_friend_button > svg:hover {
+.remove_friend_button:hover > svg {
   color: red;
+}
+
+.chat {
+  cursor: pointer;
 }
 
 .chat:hover,
 .chat:hover > .remove_friend_button {
   background-color: var(--highlight-color);
-  cursor: pointer;
 }
 
 .chat > .remove_friend_button {
