@@ -116,6 +116,27 @@ export const get_search_profile = expressAsyncHandler(async (req, res, next) => 
   res.json(user);
 });
 
+const returnSender = expressAsyncHandler(async (req, res, next) => {
+  const sender = await User.findById(req.params.sender)
+    .populate("friends")
+    .populate({
+      path: "friendRequests",
+      populate: {
+        path: "sender",
+        model: "users"
+      }
+    })
+    .populate({
+      path: "friendRequests",
+      populate: {
+        path: "receiver",
+        model: "users"
+      }
+    })
+    .exec();
+  res.json(sender);
+});
+
 export const post_send_friend_request = [
   expressAsyncHandler(async (req, res, next) => {
     const [sender, receiver] = await Promise.all([
@@ -135,29 +156,9 @@ export const post_send_friend_request = [
     receiver.friendRequests = [...receiver.friendRequests, friendRequest];
     await sender.save();
     await receiver.save();
-    // res.json(sender);
     next();
   }),
-  expressAsyncHandler(async (req, res, next) => {
-    const user = await User.findById(req.params.sender)
-      .populate("friends")
-      .populate({
-        path: "friendRequests",
-        populate: {
-          path: "sender",
-          model: "users"
-        }
-      })
-      .populate({
-        path: "friendRequests",
-        populate: {
-          path: "receiver",
-          model: "users"
-        }
-      })
-      .exec();
-    res.json(user);
-  })
+  returnSender
 ];
 
 const filterFriendRequest = expressAsyncHandler(async (req, res, next) => {
@@ -233,28 +234,7 @@ const filterFriendRequest = expressAsyncHandler(async (req, res, next) => {
   next();
 });
 
-export const put_remove_friend_request = [
-  filterFriendRequest,
-  expressAsyncHandler(async (req, res, next) => {
-    const sender = await User.findById(req.params.sender)
-      .populate({
-        path: "friendRequests",
-        populate: {
-          path: "sender",
-          model: "users"
-        }
-      })
-      .populate({
-        path: "friendRequests",
-        populate: {
-          path: "receiver",
-          model: "users"
-        }
-      })
-      .exec();
-    res.json(sender);
-  })
-];
+export const put_remove_friend_request = [filterFriendRequest, returnSender];
 
 export const put_accept_friend_request = [
   filterFriendRequest,
@@ -269,26 +249,7 @@ export const put_accept_friend_request = [
     await receiver.save();
     next();
   }),
-  expressAsyncHandler(async (req, res, next) => {
-    const user = await User.findById(req.params.sender)
-      .populate("friends")
-      .populate({
-        path: "friendRequests",
-        populate: {
-          path: "sender",
-          model: "users"
-        }
-      })
-      .populate({
-        path: "friendRequests",
-        populate: {
-          path: "receiver",
-          model: "users"
-        }
-      })
-      .exec();
-    res.json(user);
-  })
+  returnSender
 ];
 
 export const put_remove_friend = expressAsyncHandler(async (req, res, next) => {
