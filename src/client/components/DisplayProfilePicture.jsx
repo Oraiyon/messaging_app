@@ -28,21 +28,12 @@ const DisplayProfilePicture = (props) => {
   const ProfilePicturePicker = (props) => {
     if (props.profile.picture) {
       return (
-        <img
-          src={props.profile.picture}
-          alt="Profile Picture"
-          title={props.user ? "Change Profile Picture" : ""}
-          className={styles.profile_picture}
-        />
+        <img src={props.profile.picture} alt="Profile Picture" className={styles.profile_picture} />
       );
     } else {
       return (
         <div className={styles.default_profile_picture}>
-          <Icon
-            path={mdiAccountCircle}
-            className={styles.profile_picture}
-            title="Change Profile Picture"
-          />
+          <Icon path={mdiAccountCircle} className={styles.profile_picture} />
         </div>
       );
     }
